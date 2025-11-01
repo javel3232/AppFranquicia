@@ -1,6 +1,7 @@
 package com.nequi.franquicia_app.controller;
 
 import com.nequi.franquicia_app.dto.request.CrearProductoRequest;
+import com.nequi.franquicia_app.dto.request.ModificarStockRequest;
 import com.nequi.franquicia_app.exception.ProductoNotFoundException;
 import com.nequi.franquicia_app.exception.SucursalNotFoundException;
 import com.nequi.franquicia_app.model.Producto;
@@ -33,6 +34,17 @@ public class ProductoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<Void> eliminarProducto(@PathVariable Long productoId) {
         return productoService.eliminarProducto(productoId)
+            .onErrorMap(ProductoNotFoundException.class,
+                ex -> new RuntimeException(ex.getMessage()));
+    }
+    
+    @PutMapping("/productos/{productoId}/stock")
+    public Mono<Producto> modificarStock(
+            @PathVariable Long productoId,
+            @RequestBody ModificarStockRequest request) {
+        return productoService.modificarStock(productoId, request)
+            .onErrorMap(IllegalArgumentException.class,
+                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
             .onErrorMap(ProductoNotFoundException.class,
                 ex -> new RuntimeException(ex.getMessage()));
     }
