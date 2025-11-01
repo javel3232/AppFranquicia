@@ -18,6 +18,8 @@ public class FranquiciaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Franquicia> crearFranquicia(@RequestBody CrearFranquiciaRequest request) {
-        return franquiciaService.crearFranquicia(request);
+        return franquiciaService.crearFranquicia(request)
+            .onErrorMap(IllegalArgumentException.class, 
+                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()));
     }
 }
