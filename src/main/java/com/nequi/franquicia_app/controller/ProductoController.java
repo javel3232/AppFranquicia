@@ -1,5 +1,6 @@
 package com.nequi.franquicia_app.controller;
 
+import com.nequi.franquicia_app.dto.request.ActualizarProductoRequest;
 import com.nequi.franquicia_app.dto.request.CrearProductoRequest;
 import com.nequi.franquicia_app.dto.request.ModificarStockRequest;
 import com.nequi.franquicia_app.dto.response.ProductoMayorStockResponse;
@@ -46,6 +47,17 @@ public class ProductoController {
             @PathVariable Long productoId,
             @RequestBody ModificarStockRequest request) {
         return productoService.modificarStock(productoId, request)
+            .onErrorMap(IllegalArgumentException.class,
+                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
+            .onErrorMap(ProductoNotFoundException.class,
+                ex -> new RuntimeException(ex.getMessage()));
+    }
+    
+    @PutMapping("/productos/{productoId}/nombre")
+    public Mono<Producto> actualizarNombre(
+            @PathVariable Long productoId,
+            @RequestBody ActualizarProductoRequest request) {
+        return productoService.actualizarNombre(productoId, request)
             .onErrorMap(IllegalArgumentException.class,
                 ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
             .onErrorMap(ProductoNotFoundException.class,

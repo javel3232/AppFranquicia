@@ -2,6 +2,7 @@ package com.nequi.franquicia_app.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.nequi.franquicia_app.dto.request.ActualizarProductoRequest;
 import com.nequi.franquicia_app.dto.request.CrearProductoRequest;
 import com.nequi.franquicia_app.dto.request.ModificarStockRequest;
 import com.nequi.franquicia_app.dto.response.ProductoMayorStockResponse;
@@ -23,6 +24,8 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 public class ProductoServiceImpl implements ProductoService {
+    
+    private static final String PRODUCT_ID_REQUIRED = "Product ID is required";
     
     private final ProductoRepository productoRepository;
     private final SucursalRepository sucursalRepository;
@@ -50,7 +53,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Mono<Void> eliminarProducto(Long productoId) {
         if (productoId == null) {
-            return Mono.error(new IllegalArgumentException("ID de producto es requerido"));
+            return Mono.error(new IllegalArgumentException(PRODUCT_ID_REQUIRED));
         }
         return productoRepository.existsById(productoId)
             .filter(exists -> exists)
@@ -63,7 +66,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Mono<Producto> modificarStock(Long productoId, ModificarStockRequest request) {
         if (productoId == null) {
-            return Mono.error(new IllegalArgumentException("ID de producto es requerido"));
+            return Mono.error(new IllegalArgumentException(PRODUCT_ID_REQUIRED));
         }
         return Mono.just(request)
             .filter(req -> req.getNuevoStock() != null && req.getNuevoStock() >= 0)
@@ -77,6 +80,25 @@ public class ProductoServiceImpl implements ProductoService {
             .flatMap(productoRepository::save)
             .doOnSuccess(p -> log.info("Stock actualizado para producto ID: {} - Nuevo stock: {}", productoId, p.getStock()))
             .doOnError(e -> log.error("Error modificando stock: {}", e.getMessage()));
+    }
+    
+    @Override
+    public Mono<Producto> actualizarNombre(Long productoId, ActualizarProductoRequest request) {
+        if (productoId == null) {
+            return Mono.error(new IllegalArgumentException(PRODUCT_ID_REQUIRED));
+        }
+        return Mono.just(request)
+            .filter(req -> req.getNuevoNombre() != null && !req.getNuevoNombre().trim().isEmpty())
+            .switchIfEmpty(Mono.error(new IllegalArgumentException("Nuevo nombre es requerido")))
+            .flatMap(req -> productoRepository.findById(productoId)
+                .switchIfEmpty(Mono.error(new ProductoNotFoundException(productoId)))
+                .map(producto -> {
+                    producto.setNombre(req.getNuevoNombre().trim());
+                    return producto;
+                }))
+            .flatMap(productoRepository::save)
+            .doOnSuccess(p -> log.info("Producto actualizado: ID {} - Nuevo nombre: {}", productoId, p.getNombre()))
+            .doOnError(e -> log.error("Error actualizando producto: {}", e.getMessage()));
     }
     
     @Override
