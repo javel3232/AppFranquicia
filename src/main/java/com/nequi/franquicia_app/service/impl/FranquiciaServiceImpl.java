@@ -9,6 +9,7 @@ import com.nequi.franquicia_app.service.FranquiciaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -46,5 +47,23 @@ public class FranquiciaServiceImpl implements FranquiciaService {
             .flatMap(franquiciaRepository::save)
             .doOnSuccess(f -> log.info("Franquicia actualizada: ID {} - Nuevo nombre: {}", franquiciaId, f.getNombre()))
             .doOnError(e -> log.error("Error actualizando franquicia: {}", e.getMessage()));
+    }
+    
+    @Override
+    public Flux<Franquicia> obtenerTodasLasFranquicias() {
+        return franquiciaRepository.findAll()
+            .doOnNext(f -> log.debug("Franquicia encontrada: {}", f.getNombre()))
+            .doOnError(e -> log.error("Error obteniendo franquicias: {}", e.getMessage()));
+    }
+    
+    @Override
+    public Mono<Franquicia> obtenerFranquiciaPorId(Long franquiciaId) {
+        if (franquiciaId == null) {
+            return Mono.error(new IllegalArgumentException("ID de franquicia es requerido"));
+        }
+        return franquiciaRepository.findById(franquiciaId)
+            .switchIfEmpty(Mono.error(new FranquiciaNotFoundException(franquiciaId)))
+            .doOnSuccess(f -> log.info("Franquicia encontrada: ID {} - {}", franquiciaId, f.getNombre()))
+            .doOnError(e -> log.error("Error obteniendo franquicia por ID: {}", e.getMessage()));
     }
 }
