@@ -22,16 +22,19 @@ public class SucursalServiceImpl implements SucursalService {
     private final FranquiciaRepository franquiciaRepository;
     
     @Override
-    public Mono<Sucursal> crearSucursal(Long franquiciaId, CrearSucursalRequest request) {
+    public Mono<Sucursal> crearSucursal(Long franchiseId, CrearSucursalRequest request) {
+        if (franchiseId == null) {
+            return Mono.error(new IllegalArgumentException("Franchise ID is required"));
+        }
         return Mono.just(request)
             .filter(req -> req.getNombre() != null && !req.getNombre().trim().isEmpty())
             .switchIfEmpty(Mono.error(new IllegalArgumentException("Nombre es requerido")))
-            .flatMap(req -> franquiciaRepository.existsById(franquiciaId)
+            .flatMap(req -> franquiciaRepository.existsById(franchiseId)
                 .filter(exists -> exists)
-                .switchIfEmpty(Mono.error(new FranquiciaNotFoundException(franquiciaId)))
-                .map(exists -> new Sucursal(null, req.getNombre().trim(), franquiciaId)))
+                .switchIfEmpty(Mono.error(new FranquiciaNotFoundException(franchiseId)))
+                .map(exists -> new Sucursal(null, req.getNombre().trim(), franchiseId)))
             .flatMap(sucursalRepository::save)
-            .doOnSuccess(s -> log.info("Sucursal creada: {} para franquicia ID: {}", s.getNombre(), franquiciaId))
+            .doOnSuccess(s -> log.info("Sucursal creada: {} para franchise ID: {}", s.getNombre(), franchiseId))
             .doOnError(e -> log.error("Error creando sucursal: {}", e.getMessage()));
     }
     
