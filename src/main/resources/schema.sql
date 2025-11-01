@@ -25,9 +25,3 @@ CREATE TABLE IF NOT EXISTS productos (
     FOREIGN KEY (sucursal_id) REFERENCES sucursales(id)
 );
 
--- Datos de prueba
-INSERT INTO franquicias (nombre) VALUES ('McDonald''s');
-INSERT INTO franquicias (nombre) VALUES ('Subway');
-
-INSERT INTO sucursales (nombre, franquicia_id) VALUES ('McDonald''s Centro', 1);
-INSERT INTO sucursales (nombre, franquicia_id) VALUES ('McDonald''s Norte', 1);
