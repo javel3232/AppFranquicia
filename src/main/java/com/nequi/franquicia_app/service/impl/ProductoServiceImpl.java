@@ -3,6 +3,7 @@ package com.nequi.franquicia_app.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.nequi.franquicia_app.dto.request.CrearProductoRequest;
+import com.nequi.franquicia_app.exception.ProductoNotFoundException;
 import com.nequi.franquicia_app.exception.SucursalNotFoundException;
 import com.nequi.franquicia_app.model.Producto;
 import com.nequi.franquicia_app.repository.ProductoRepository;
@@ -23,6 +24,9 @@ public class ProductoServiceImpl implements ProductoService {
     
     @Override
     public Mono<Producto> crearProducto(Long sucursalId, CrearProductoRequest request) {
+        if (sucursalId == null) {
+            return Mono.error(new IllegalArgumentException("ID de sucursal es requerido"));
+        }
         return Mono.just(request)
             .filter(req -> req.getNombre() != null && !req.getNombre().trim().isEmpty())
             .switchIfEmpty(Mono.error(new IllegalArgumentException("Nombre es requerido")))
@@ -35,5 +39,18 @@ public class ProductoServiceImpl implements ProductoService {
             .flatMap(productoRepository::save)
             .doOnSuccess(p -> log.info("Producto creado: {} para sucursal ID: {}", p.getNombre(), sucursalId))
             .doOnError(e -> log.error("Error creando producto: {}", e.getMessage()));
+    }
+    
+    @Override
+    public Mono<Void> eliminarProducto(Long productoId) {
+        if (productoId == null) {
+            return Mono.error(new IllegalArgumentException("ID de producto es requerido"));
+        }
+        return productoRepository.existsById(productoId)
+            .filter(exists -> exists)
+            .switchIfEmpty(Mono.error(new ProductoNotFoundException(productoId)))
+            .flatMap(exists -> productoRepository.deleteById(productoId))
+            .doOnSuccess(v -> log.info("Producto eliminado con ID: {}", productoId))
+            .doOnError(e -> log.error("Error eliminando producto: {}", e.getMessage()));
     }
 }

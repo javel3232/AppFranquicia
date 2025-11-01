@@ -7,4 +7,5 @@ import reactor.core.publisher.Mono;
 public interface ProductoService {
     
     Mono<Producto> crearProducto(Long sucursalId, CrearProductoRequest request);
+    Mono<Void> eliminarProducto(Long productoId);
 }
