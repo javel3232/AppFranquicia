@@ -36,12 +36,12 @@ public class FranquiciaServiceImpl implements FranquiciaService {
             return Mono.error(new IllegalArgumentException("ID de franquicia es requerido"));
         }
         return Mono.just(request)
-            .filter(req -> req.getNuevoNombre() != null && !req.getNuevoNombre().trim().isEmpty())
-            .switchIfEmpty(Mono.error(new IllegalArgumentException("Nuevo nombre es requerido")))
+            .filter(req -> req.getNombre() != null && !req.getNombre().trim().isEmpty())
+            .switchIfEmpty(Mono.error(new IllegalArgumentException("Nombre es requerido")))
             .flatMap(req -> franquiciaRepository.findById(franquiciaId)
                 .switchIfEmpty(Mono.error(new FranquiciaNotFoundException(franquiciaId)))
                 .map(franquicia -> {
-                    franquicia.setNombre(req.getNuevoNombre().trim());
+                    franquicia.setNombre(req.getNombre().trim());
                     return franquicia;
                 }))
             .flatMap(franquiciaRepository::save)

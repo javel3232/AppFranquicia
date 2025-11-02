@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ActualizarSucursalRequest {
     
-    private String nuevoNombre;
+    private String nombre;
 }

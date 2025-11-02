@@ -20,17 +20,17 @@ Content-Type: application/json
 {"nombre": "McDonald's"}
 
 # 3. Crear sucursal (usar ID de franquicia creada)
-POST http://44.209.140.88/api/franquicias/1/sucursales
+POST http://44.209.140.88/api/franquicias/{id de franquicia}/sucursales
 Content-Type: application/json
 {"nombre": "Sucursal Centro"}
 
 # 4. Crear producto (usar ID de sucursal creada)
-POST http://44.209.140.88/api/sucursales/1/productos
+POST http://44.209.140.88/api/sucursales/{id de sucursal}/productos
 Content-Type: application/json
 {"nombre": "Big Mac", "stock": 50}
 
 # 5. Ver producto con mayor stock
-GET http://44.209.140.88/api/sucursales/franquicias/1/productos/mayor-stock
+GET http://44.209.140.88/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
 ```
 
 Simplemente cambia `localhost:8080` por `44.209.140.88` en todos los endpoints de esta guía para probar la versión en la nube.
@@ -187,51 +187,59 @@ Content-Type: application/json
 GET http://localhost:8080/api/franquicias
 
 # Obtener Franquicia por ID
-GET http://localhost:8080/api/franquicias/1
+GET http://localhost:8080/api/franquicias/{id de franquicia}
 
 # Actualizar Nombre de Franquicia
-PUT http://localhost:8080/api/franquicias/1/nombre
+PUT http://localhost:8080/api/franquicias/{id de franquicia}/nombre
 Content-Type: application/json
 
-{"nuevoNombre": "McDonald's Premium"}
+{"nombre": "McDonald's Premium"}
 ```
 
 **2. SUCURSALES**
 
 ```bash
 # Crear Sucursal
-POST http://localhost:8080/api/franquicias/1/sucursales
+POST http://localhost:8080/api/franquicias/{id de franquicia}/sucursales
 Content-Type: application/json
 
 {"nombre": "Sucursal Centro"}
 
 # Actualizar Nombre de Sucursal
-PUT http://localhost:8080/api/franquicias/sucursales/1/nombre
+PUT http://localhost:8080/api/franquicias/sucursales/{id de sucursal}/nombre
 Content-Type: application/json
 
-{"nuevoNombre": "Sucursal Norte"}
+{"nombre": "Sucursal Norte"}
 ```
 
 **3. PRODUCTOS**
 
 ```bash
 # Crear Producto
-POST http://localhost:8080/api/sucursales/1/productos
+POST http://localhost:8080/api/sucursales/{id de sucursal}/productos
 Content-Type: application/json
 
 {"nombre": "Big Mac", "stock": 50}
 
-# Actualizar Stock de Producto
-PUT http://localhost:8080/api/sucursales/productos/1/stock
+
+# Actualizar Nombre de Producto
+PUT http://localhost:8080/api/sucursales/productos/{id de producto}/nombre
 Content-Type: application/json
 
-{"nuevoStock": 75}
+{"nombre": "Big Mac Deluxe"}
 
-# Eliminar Producto
-DELETE http://localhost:8080/api/sucursales/productos/1
+# Actualizar Stock de Producto
+PUT http://localhost:8080/api/sucursales/productos/{id de producto}/stock
+Content-Type: application/json
+
+{"stock": 75}
+
 
 # Obtener Producto con Mayor Stock por Sucursal
-GET http://localhost:8080/api/sucursales/franquicias/1/productos/mayor-stock
+GET http://localhost:8080/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
+
+# Eliminar Producto
+DELETE http://localhost:8080/api/sucursales/productos/{id de producto}
 ```
 
 #### Opción 4: Flujo de Prueba Completo con cURL
@@ -246,25 +254,30 @@ curl -X POST http://localhost:8080/api/franquicias \
 curl http://localhost:8080/api/franquicias
 
 # 3. Crear sucursal
-curl -X POST http://localhost:8080/api/franquicias/1/sucursales \
+curl -X POST http://localhost:8080/api/franquicias/{id de franquicia}/sucursales \
   -H "Content-Type: application/json" \
   -d '{"nombre": "Centro"}'
 
 # 4. Crear productos
-curl -X POST http://localhost:8080/api/sucursales/1/productos \
+curl -X POST http://localhost:8080/api/sucursales/{id de sucursal}/productos \
   -H "Content-Type: application/json" \
   -d '{"nombre": "Big Mac", "stock": 50}'
 
 # 5. Ver producto con mayor stock
-curl http://localhost:8080/api/sucursales/franquicias/1/productos/mayor-stock
+curl http://localhost:8080/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
 
 # 6. Actualizar stock
-curl -X PUT http://localhost:8080/api/sucursales/productos/1/stock \
+curl -X PUT http://localhost:8080/api/sucursales/productos/{id de producto}/stock \
   -H "Content-Type: application/json" \
-  -d '{"nuevoStock": 75}'
+  -d '{"stock": 75}'
 
-# 7. Eliminar producto
-curl -X DELETE http://localhost:8080/api/sucursales/productos/1
+# 7. Actualizar nombre de producto
+curl -X PUT http://localhost:8080/api/sucursales/productos/{id de producto}/nombre \
+  -H "Content-Type: application/json" \
+  -d '{"nombre": "Big Mac Deluxe"}'
+
+# 8. Eliminar producto
+curl -X DELETE http://localhost:8080/api/sucursales/productos/{id de producto}
 ```
 
 ---

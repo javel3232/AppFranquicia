@@ -16,27 +16,19 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class FranquiciaController {
     
-    private static final String INVALID_DATA = "Invalid data: ";
-    
     private final FranquiciaService franquiciaService;
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Franquicia> crearFranquicia(@RequestBody CrearFranquiciaRequest request) {
-        return franquiciaService.crearFranquicia(request)
-            .onErrorMap(IllegalArgumentException.class, 
-                ex -> new RuntimeException(INVALID_DATA + ex.getMessage()));
+        return franquiciaService.crearFranquicia(request);
     }
     
     @PutMapping("/{franquiciaId}/nombre")
     public Mono<Franquicia> actualizarNombre(
             @PathVariable Long franquiciaId,
             @RequestBody ActualizarFranquiciaRequest request) {
-        return franquiciaService.actualizarNombre(franquiciaId, request)
-            .onErrorMap(IllegalArgumentException.class,
-                ex -> new RuntimeException(INVALID_DATA + ex.getMessage()))
-            .onErrorMap(FranquiciaNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return franquiciaService.actualizarNombre(franquiciaId, request);
     }
     
     @GetMapping
@@ -46,10 +38,6 @@ public class FranquiciaController {
     
     @GetMapping("/{franquiciaId}")
     public Mono<Franquicia> obtenerFranquiciaPorId(@PathVariable Long franquiciaId) {
-        return franquiciaService.obtenerFranquiciaPorId(franquiciaId)
-            .onErrorMap(IllegalArgumentException.class,
-                ex -> new RuntimeException(INVALID_DATA + ex.getMessage()))
-            .onErrorMap(FranquiciaNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return franquiciaService.obtenerFranquiciaPorId(franquiciaId);
     }
 }

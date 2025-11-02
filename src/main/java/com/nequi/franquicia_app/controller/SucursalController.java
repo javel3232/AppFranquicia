@@ -23,21 +23,13 @@ public class SucursalController {
     public Mono<Sucursal> crearSucursal(
             @PathVariable Long franquiciaId,
             @RequestBody CrearSucursalRequest request) {
-        return sucursalService.crearSucursal(franquiciaId, request)
-            .onErrorMap(IllegalArgumentException.class, 
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(FranquiciaNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return sucursalService.crearSucursal(franquiciaId, request);
     }
     
     @PutMapping("/sucursales/{sucursalId}/nombre")
     public Mono<Sucursal> actualizarNombre(
             @PathVariable Long sucursalId,
             @RequestBody ActualizarSucursalRequest request) {
-        return sucursalService.actualizarNombre(sucursalId, request)
-            .onErrorMap(IllegalArgumentException.class,
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(SucursalNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return sucursalService.actualizarNombre(sucursalId, request);
     }
 }

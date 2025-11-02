@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ActualizarProductoRequest {
     
-    private String nuevoNombre;
+    private String nombre;
 }

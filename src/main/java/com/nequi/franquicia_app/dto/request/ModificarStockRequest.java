@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ModificarStockRequest {
     
-    private Integer nuevoStock;
+    private Integer stock;
 }

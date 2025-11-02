@@ -44,12 +44,12 @@ public class SucursalServiceImpl implements SucursalService {
             return Mono.error(new IllegalArgumentException("ID de sucursal es requerido"));
         }
         return Mono.just(request)
-            .filter(req -> req.getNuevoNombre() != null && !req.getNuevoNombre().trim().isEmpty())
-            .switchIfEmpty(Mono.error(new IllegalArgumentException("Nuevo nombre es requerido")))
+            .filter(req -> req.getNombre() != null && !req.getNombre().trim().isEmpty())
+            .switchIfEmpty(Mono.error(new IllegalArgumentException("Nombre es requerido")))
             .flatMap(req -> sucursalRepository.findById(sucursalId)
                 .switchIfEmpty(Mono.error(new SucursalNotFoundException(sucursalId)))
                 .map(sucursal -> {
-                    sucursal.setNombre(req.getNuevoNombre().trim());
+                    sucursal.setNombre(req.getNombre().trim());
                     return sucursal;
                 }))
             .flatMap(sucursalRepository::save)

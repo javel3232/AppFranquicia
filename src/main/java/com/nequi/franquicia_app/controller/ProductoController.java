@@ -27,50 +27,32 @@ public class ProductoController {
     public Mono<Producto> crearProducto(
             @PathVariable Long sucursalId,
             @RequestBody CrearProductoRequest request) {
-        return productoService.crearProducto(sucursalId, request)
-            .onErrorMap(IllegalArgumentException.class, 
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(SucursalNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return productoService.crearProducto(sucursalId, request);
     }
     
     @DeleteMapping("/productos/{productoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<Void> eliminarProducto(@PathVariable Long productoId) {
-        return productoService.eliminarProducto(productoId)
-            .onErrorMap(ProductoNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return productoService.eliminarProducto(productoId);
     }
     
     @PutMapping("/productos/{productoId}/stock")
     public Mono<Producto> modificarStock(
             @PathVariable Long productoId,
             @RequestBody ModificarStockRequest request) {
-        return productoService.modificarStock(productoId, request)
-            .onErrorMap(IllegalArgumentException.class,
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(ProductoNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return productoService.modificarStock(productoId, request);
     }
     
     @PutMapping("/productos/{productoId}/nombre")
     public Mono<Producto> actualizarNombre(
             @PathVariable Long productoId,
             @RequestBody ActualizarProductoRequest request) {
-        return productoService.actualizarNombre(productoId, request)
-            .onErrorMap(IllegalArgumentException.class,
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(ProductoNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return productoService.actualizarNombre(productoId, request);
     }
     
     @GetMapping("/franquicias/{franquiciaId}/productos/mayor-stock")
     public Flux<ProductoMayorStockResponse> obtenerProductosMayorStockPorSucursal(
             @PathVariable Long franquiciaId) {
-        return productoService.obtenerProductosMayorStockPorSucursal(franquiciaId)
-            .onErrorMap(IllegalArgumentException.class,
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(FranquiciaNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return productoService.obtenerProductosMayorStockPorSucursal(franquiciaId);
     }
 }
