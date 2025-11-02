@@ -111,7 +111,7 @@ gradlew.bat test
 
 **En Windows:**
 ```cmd
-./gradlew.bat bootRun
+ gradlew.bat bootRun
 ```
 
 **En Mac/Linux:**
@@ -126,6 +126,114 @@ gradlew.bat test
 3. Deberías ver una respuesta JSON (puede estar vacía al inicio)
 
 **¡Listo! Tu aplicación está funcionando.**
+
+### Paso 5: Probar la API
+
+Una vez que la aplicación esté ejecutándose, puedes probar todos los endpoints siguiendo el orden de los criterios de aceptación:
+
+#### Usando el Navegador Web (Solo para consultas GET)
+
+- **Ver todas las franquicias**: `http://localhost:8080/api/franquicias`
+- **Ver sucursales de franquicia 1**: `http://localhost:8080/api/franquicias/1/sucursales`
+- **Ver producto con mayor stock**: `http://localhost:8080/api/franquicias/1/producto-mayor-stock`
+
+#### Lista Completa de Endpoints
+
+**1. FRANQUICIAS**
+
+```bash
+# Crear Franquicia
+POST http://localhost:8080/api/franquicias
+Content-Type: application/json
+
+{"nombre": "McDonald's"}
+
+# Obtener Todas las Franquicias
+GET http://localhost:8080/api/franquicias
+
+# Obtener Franquicia por ID
+GET http://localhost:8080/api/franquicias/1
+
+# Actualizar Nombre de Franquicia
+PUT http://localhost:8080/api/franquicias/1
+Content-Type: application/json
+
+{"nuevoNombre": "McDonald's Premium"}
+```
+
+**2. SUCURSALES**
+
+```bash
+# Crear Sucursal
+POST http://localhost:8080/api/franquicias/1/sucursales
+Content-Type: application/json
+
+{"nombre": "Sucursal Centro"}
+
+# Obtener Sucursales de una Franquicia
+GET http://localhost:8080/api/franquicias/1/sucursales
+
+# Actualizar Nombre de Sucursal
+PUT http://localhost:8080/api/sucursales/1
+Content-Type: application/json
+
+{"nuevoNombre": "Sucursal Norte"}
+```
+
+**3. PRODUCTOS**
+
+```bash
+# Crear Producto
+POST http://localhost:8080/api/sucursales/1/productos
+Content-Type: application/json
+
+{"nombre": "Big Mac", "stock": 50}
+
+# Actualizar Stock de Producto
+PUT http://localhost:8080/api/productos/1/stock
+Content-Type: application/json
+
+{"nuevoStock": 75}
+
+# Eliminar Producto
+DELETE http://localhost:8080/api/productos/1
+
+# Obtener Producto con Mayor Stock por Sucursal
+GET http://localhost:8080/api/franquicias/1/producto-mayor-stock
+```
+
+#### Flujo de Prueba Completo con cURL
+
+```bash
+# 1. Crear franquicia
+curl -X POST http://localhost:8080/api/franquicias \
+  -H "Content-Type: application/json" \
+  -d '{"nombre": "McDonald'\'s"}'
+
+# 2. Ver franquicias
+curl http://localhost:8080/api/franquicias
+
+# 3. Crear sucursal
+curl -X POST http://localhost:8080/api/franquicias/1/sucursales \
+  -H "Content-Type: application/json" \
+  -d '{"nombre": "Centro"}'
+
+# 4. Crear productos
+curl -X POST http://localhost:8080/api/sucursales/1/productos \
+  -H "Content-Type: application/json" \
+  -d '{"nombre": "Big Mac", "stock": 50}'
+
+# 5. Ver producto con mayor stock
+curl http://localhost:8080/api/franquicias/1/producto-mayor-stock
+
+# 6. Actualizar stock
+curl -X PUT http://localhost:8080/api/productos/1/stock \
+  -H "Content-Type: application/json" \
+  -d '{"nuevoStock": 75}'
+
+# 7. Eliminar producto
+curl -X DELETE http://localhost:8080/api/productos/1
+```
 
 ---
 
@@ -200,41 +308,12 @@ Ve a: `http://localhost:8080/api/franquicias`
 
 ---
 
-## Probar la API
-
-Una vez que la aplicación esté ejecutándose, puedes probar los endpoints:
-
-### Usando el Navegador Web (Solo para consultas GET)
-
-- **Ver todas las franquicias**: `http://localhost:8080/api/franquicias`
-- **Ver sucursales de franquicia 1**: `http://localhost:8080/api/franquicias/1/sucursales`
-
-### Usando cURL (Para todas las operaciones)
-
-**Crear una franquicia:**
-```bash
-curl -X POST http://localhost:8080/api/franquicias \
-  -H "Content-Type: application/json" \
-  -d "{\"nombre\": \"McDonald's\"}"
-```
-
-**Ver todas las franquicias:**
-```bash
-curl http://localhost:8080/api/franquicias
-```
-
-**Crear una sucursal (necesitas tener una franquicia primero):**
-```bash
-curl -X POST http://localhost:8080/api/franquicias/1/sucursales \
-  -H "Content-Type: application/json" \
-  -d "{\"nombre\": \"Sucursal Centro\"}"
-```
-
-### Usando Postman (Interfaz Gráfica)
+## Usando Postman (Interfaz Gráfica)
 
 1. Descargar Postman desde [postman.com](https://www.postman.com/)
 2. Crear una nueva colección
-3. Agregar requests con las URLs y métodos HTTP correspondientes
+3. Agregar requests con las URLs y métodos HTTP de arriba
+4. Seguir el flujo de prueba completo
 
 ## Solución de Problemas Comunes
 
