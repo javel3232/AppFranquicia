@@ -1,7 +1,3 @@
--- Crear base de datos
-CREATE DATABASE IF NOT EXISTS franquicias;
-USE franquicias;
-
 -- Tabla franquicias
 CREATE TABLE IF NOT EXISTS franquicias (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,

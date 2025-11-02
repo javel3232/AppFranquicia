@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: franquicia-app
+    environment:
+      SPRING_R2DBC_URL: r2dbc:mysql://database-1.cshi6wwa22p3.us-east-1.rds.amazonaws.com:3306/franquicias
+      SPRING_R2DBC_USERNAME: admin
+      SPRING_R2DBC_PASSWORD: Alitovel97
+    ports:
+      - "8080:8080"
