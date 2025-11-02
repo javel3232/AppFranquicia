@@ -2,6 +2,41 @@
 
 Esta guía te permitirá ejecutar la aplicación en tu entorno local paso a paso, sin importar tu nivel de experiencia.
 
+## 🚀 Prueba Rápida en la Nube
+
+**Antes de instalar localmente**, puedes probar la aplicación que ya está desplegada en la nube usando Postman o cualquier consumidor de API:
+
+**URL Base:** `http://44.209.140.88/api/franquicias`
+
+**Endpoints para probar:**
+
+```bash
+# 1. Ver franquicias (puede estar vacío al inicio)
+GET http://44.209.140.88/api/franquicias
+
+# 2. Crear franquicia
+POST http://44.209.140.88/api/franquicias
+Content-Type: application/json
+{"nombre": "McDonald's"}
+
+# 3. Crear sucursal (usar ID de franquicia creada)
+POST http://44.209.140.88/api/franquicias/1/sucursales
+Content-Type: application/json
+{"nombre": "Sucursal Centro"}
+
+# 4. Crear producto (usar ID de sucursal creada)
+POST http://44.209.140.88/api/sucursales/1/productos
+Content-Type: application/json
+{"nombre": "Big Mac", "stock": 50}
+
+# 5. Ver producto con mayor stock
+GET http://44.209.140.88/api/sucursales/franquicias/1/productos/mayor-stock
+```
+
+Simplemente cambia `localhost:8080` por `44.209.140.88` en todos los endpoints de esta guía para probar la versión en la nube.
+
+---
+
 ## Prerrequisitos
 
 Antes de comenzar, necesitas instalar las siguientes herramientas:
@@ -155,7 +190,7 @@ GET http://localhost:8080/api/franquicias
 GET http://localhost:8080/api/franquicias/1
 
 # Actualizar Nombre de Franquicia
-PUT http://localhost:8080/api/franquicias/1
+PUT http://localhost:8080/api/franquicias/1/nombre
 Content-Type: application/json
 
 {"nuevoNombre": "McDonald's Premium"}
@@ -170,11 +205,8 @@ Content-Type: application/json
 
 {"nombre": "Sucursal Centro"}
 
-# Obtener Sucursales de una Franquicia
-GET http://localhost:8080/api/franquicias/1/sucursales
-
 # Actualizar Nombre de Sucursal
-PUT http://localhost:8080/api/sucursales/1
+PUT http://localhost:8080/api/franquicias/sucursales/1/nombre
 Content-Type: application/json
 
 {"nuevoNombre": "Sucursal Norte"}
@@ -190,16 +222,16 @@ Content-Type: application/json
 {"nombre": "Big Mac", "stock": 50}
 
 # Actualizar Stock de Producto
-PUT http://localhost:8080/api/productos/1/stock
+PUT http://localhost:8080/api/sucursales/productos/1/stock
 Content-Type: application/json
 
 {"nuevoStock": 75}
 
 # Eliminar Producto
-DELETE http://localhost:8080/api/productos/1
+DELETE http://localhost:8080/api/sucursales/productos/1
 
 # Obtener Producto con Mayor Stock por Sucursal
-GET http://localhost:8080/api/franquicias/1/producto-mayor-stock
+GET http://localhost:8080/api/sucursales/franquicias/1/productos/mayor-stock
 ```
 
 #### Opción 4: Flujo de Prueba Completo con cURL
@@ -224,15 +256,15 @@ curl -X POST http://localhost:8080/api/sucursales/1/productos \
   -d '{"nombre": "Big Mac", "stock": 50}'
 
 # 5. Ver producto con mayor stock
-curl http://localhost:8080/api/franquicias/1/producto-mayor-stock
+curl http://localhost:8080/api/sucursales/franquicias/1/productos/mayor-stock
 
 # 6. Actualizar stock
-curl -X PUT http://localhost:8080/api/productos/1/stock \
+curl -X PUT http://localhost:8080/api/sucursales/productos/1/stock \
   -H "Content-Type: application/json" \
   -d '{"nuevoStock": 75}'
 
 # 7. Eliminar producto
-curl -X DELETE http://localhost:8080/api/productos/1
+curl -X DELETE http://localhost:8080/api/sucursales/productos/1
 ```
 
 ---
