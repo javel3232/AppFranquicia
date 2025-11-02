@@ -129,15 +129,15 @@ gradlew.bat test
 
 ### Paso 5: Probar la API
 
-Una vez que la aplicación esté ejecutándose, puedes probar todos los endpoints siguiendo el orden de los criterios de aceptación:
+Una vez que la aplicación esté ejecutándose, puedes probar todos los endpoints siguiendo el orden de los criterios de aceptación.
 
-#### Usando el Navegador Web (Solo para consultas GET)
+**RECOMENDACIÓN**: Para una mejor experiencia probando la API, se recomienda usar **Postman** ya que proporciona una interfaz gráfica intuitiva para enviar peticiones HTTP, ver respuestas formateadas y gestionar colecciones de endpoints.
 
-- **Ver todas las franquicias**: `http://localhost:8080/api/franquicias`
-- **Ver sucursales de franquicia 1**: `http://localhost:8080/api/franquicias/1/sucursales`
-- **Ver producto con mayor stock**: `http://localhost:8080/api/franquicias/1/producto-mayor-stock`
+#### Opción 1: Usando Postman (Recomendado)
 
-#### Lista Completa de Endpoints
+**Postman es la herramienta recomendada** por su facilidad de uso:
+
+1. **Descargar** Postman desde [postman.com](https://www.postman.com/)
 
 **1. FRANQUICIAS**
 
@@ -202,7 +202,7 @@ DELETE http://localhost:8080/api/productos/1
 GET http://localhost:8080/api/franquicias/1/producto-mayor-stock
 ```
 
-#### Flujo de Prueba Completo con cURL
+#### Opción 4: Flujo de Prueba Completo con cURL
 
 ```bash
 # 1. Crear franquicia
