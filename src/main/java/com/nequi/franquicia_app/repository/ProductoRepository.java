@@ -13,4 +13,6 @@ public interface ProductoRepository extends ReactiveCrudRepository<Producto, Lon
            "INNER JOIN sucursales s ON p.sucursal_id = s.id " +
            "WHERE s.franquicia_id = :franquiciaId")
     Flux<Producto> findByFranquiciaId(Long franquiciaId);
+    
+    Flux<Producto> findBySucursalId(Long sucursalId);
 }

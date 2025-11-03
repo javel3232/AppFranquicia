@@ -2,6 +2,7 @@ package com.nequi.franquicia_app.controller;
 
 import com.nequi.franquicia_app.dto.request.ActualizarSucursalRequest;
 import com.nequi.franquicia_app.dto.request.CrearSucursalRequest;
+import com.nequi.franquicia_app.dto.response.SucursalConProductosResponse;
 import com.nequi.franquicia_app.exception.FranquiciaNotFoundException;
 import com.nequi.franquicia_app.exception.SucursalNotFoundException;
 import com.nequi.franquicia_app.model.Sucursal;
@@ -23,21 +24,19 @@ public class SucursalController {
     public Mono<Sucursal> crearSucursal(
             @PathVariable Long franquiciaId,
             @RequestBody CrearSucursalRequest request) {
-        return sucursalService.crearSucursal(franquiciaId, request)
-            .onErrorMap(IllegalArgumentException.class, 
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(FranquiciaNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return sucursalService.crearSucursal(franquiciaId, request);
     }
     
     @PutMapping("/sucursales/{sucursalId}/nombre")
     public Mono<Sucursal> actualizarNombre(
             @PathVariable Long sucursalId,
             @RequestBody ActualizarSucursalRequest request) {
-        return sucursalService.actualizarNombre(sucursalId, request)
-            .onErrorMap(IllegalArgumentException.class,
-                ex -> new RuntimeException("Datos inválidos: " + ex.getMessage()))
-            .onErrorMap(SucursalNotFoundException.class,
-                ex -> new RuntimeException(ex.getMessage()));
+        return sucursalService.actualizarNombre(sucursalId, request);
+    }
+    
+    @GetMapping("/sucursales/{sucursalId}/productos")
+    public Mono<SucursalConProductosResponse> obtenerSucursalConProductos(
+            @PathVariable Long sucursalId) {
+        return sucursalService.obtenerSucursalConProductos(sucursalId);
     }
 }

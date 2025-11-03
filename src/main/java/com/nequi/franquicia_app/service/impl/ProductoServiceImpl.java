@@ -69,12 +69,12 @@ public class ProductoServiceImpl implements ProductoService {
             return Mono.error(new IllegalArgumentException(PRODUCT_ID_REQUIRED));
         }
         return Mono.just(request)
-            .filter(req -> req.getNuevoStock() != null && req.getNuevoStock() >= 0)
+            .filter(req -> req.getStock() != null && req.getStock() >= 0)
             .switchIfEmpty(Mono.error(new IllegalArgumentException("Stock debe ser mayor o igual a 0")))
             .flatMap(req -> productoRepository.findById(productoId)
                 .switchIfEmpty(Mono.error(new ProductoNotFoundException(productoId)))
                 .map(producto -> {
-                    producto.setStock(req.getNuevoStock());
+                    producto.setStock(req.getStock());
                     return producto;
                 }))
             .flatMap(productoRepository::save)
@@ -88,12 +88,12 @@ public class ProductoServiceImpl implements ProductoService {
             return Mono.error(new IllegalArgumentException(PRODUCT_ID_REQUIRED));
         }
         return Mono.just(request)
-            .filter(req -> req.getNuevoNombre() != null && !req.getNuevoNombre().trim().isEmpty())
-            .switchIfEmpty(Mono.error(new IllegalArgumentException("Nuevo nombre es requerido")))
+            .filter(req -> req.getNombre() != null && !req.getNombre().trim().isEmpty())
+            .switchIfEmpty(Mono.error(new IllegalArgumentException("Nombre es requerido")))
             .flatMap(req -> productoRepository.findById(productoId)
                 .switchIfEmpty(Mono.error(new ProductoNotFoundException(productoId)))
                 .map(producto -> {
-                    producto.setNombre(req.getNuevoNombre().trim());
+                    producto.setNombre(req.getNombre().trim());
                     return producto;
                 }))
             .flatMap(productoRepository::save)
