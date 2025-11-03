@@ -190,29 +190,36 @@ docker-compose down
 
 **1. FRANQUICIAS**
 
+### Crear Franquicia
 ![Crear Franquicia](https://drive.google.com/uc?id=11PgLf2XSiitxquxKSY3pNnD94UL2jkAV)
 ```bash
-# Crear Franquicia
 POST http://44.209.140.88/api/franquicias
 Content-Type: application/json
 
 {"nombre": "McDonald's"}
 ```
 
+---
+
+### Obtener Todas las Franquicias
 ![Obtener Franquicias](https://drive.google.com/uc?id=11Ao6t25OovtdkN0vFZalKjtVqZn2M2jG)
 ```bash
-# Obtener Todas las Franquicias
 GET http://44.209.140.88/api/franquicias
+```
 
+---
+
+### Obtener Franquicia por ID
 ![obtener por id Franquicia](https://drive.google.com/uc?id=1eVZadtKCD8LUGQ8UP-7ww2PhmxWS2jZ0)
-
-# Obtener Franquicia por ID
+```bash
 GET http://44.209.140.88/api/franquicias/{id de franquicia}
 ```
 
+---
+
+### Actualizar Nombre de Franquicia
 ![Actualizar Franquicia](https://drive.google.com/uc?id=19FnVi5-vXB4q-VGnGOSQVwxW93yCicOG)
 ```bash
-# Actualizar Nombre de Franquicia
 PUT http://44.209.140.88/api/franquicias/{id de franquicia}/nombre
 Content-Type: application/json
 
@@ -221,68 +228,80 @@ Content-Type: application/json
 
 **2. SUCURSALES**
 
+### Crear Sucursal
 ![Crear Sucursal](https://drive.google.com/uc?id=1sbAngLcNXr_5XC9RydGGJfnzYwGvQvEY)
 ```bash
-# Crear Sucursal
 POST http://44.209.140.88/api/franquicias/{id de franquicia}/sucursales
 Content-Type: application/json
 
 {"nombre": "Sucursal Centro"}
 ```
 
+---
+
+### Actualizar Nombre de Sucursal
 ![Actualizar Sucursal](https://drive.google.com/uc?id=1rdPS1YhBBhJXPbvDZwJVV1Jac2TR-b6g)
 ```bash
-# Actualizar Nombre de Sucursal
 PUT http://44.209.140.88/api/franquicias/sucursales/{id de sucursal}/nombre
 Content-Type: application/json
 
 {"nombre": "Sucursal Norte"}
 ```
 
+---
+
+### Obtener Sucursal con Todos sus Productos
 ![Obtener Sucursal con Productos](https://drive.google.com/uc?id=18la6b_b_RWF7foETKpQkq-QqZTthXh_4)
 ```bash
-# Obtener Sucursal con Todos sus Productos
 GET http://44.209.140.88/api/franquicias/sucursales/{id de sucursal}/productos
 ```
 
 **3. PRODUCTOS**
 
+### Crear Producto
 ![Crear Producto](https://drive.google.com/uc?id=12c27ZkZtPaj6Thr5HTJK7n8OC_28cgOR)
 ```bash
-# Crear Producto
 POST http://44.209.140.88/api/sucursales/{id de sucursal}/productos
 Content-Type: application/json
 
 {"nombre": "Big Mac", "stock": 50}
 ```
 
+---
+
+### Actualizar Nombre de Producto
 ![Actualizar Nombre Producto](https://drive.google.com/uc?id=1yFdbv5LSTGYUHwzPs2fldCdTecrYQtJ2)
 ```bash
-# Actualizar Nombre de Producto
 PUT http://44.209.140.88/api/sucursales/productos/{id de producto}/nombre
 Content-Type: application/json
 
 {"nombre": "Big Mac Deluxe"}
 ```
 
+---
+
+### Actualizar Stock de Producto
 ![Actualizar Stock](https://drive.google.com/uc?id=1YarfBHGa3hrRykfQwPhVwREKVLgSYe8j)
 ```bash
-# Actualizar Stock de Producto
 PUT http://44.209.140.88/api/sucursales/productos/{id de producto}/stock
 Content-Type: application/json
 
 {"stock": 75}
 ```
 
+---
+
+### Obtener Producto con Mayor Stock por Sucursal
 ![Obtener Mayor Stock](https://drive.google.com/uc?id=1sgPZvPrAKVxXDQ9ixaUqH-WhqJ6joJ0w)
 ```bash
-# Obtener Producto con Mayor Stock por Sucursal
 GET http://44.209.140.88/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
 ```
 
+---
+
+### Eliminar Producto
 ![Eliminar Producto](https://drive.google.com/uc?id=1UBQHhyry7tgmryzDMJtRel0hlmN9o3Tg)
 ```bash
-# Eliminar Producto
 DELETE http://44.209.140.88/api/sucursales/productos/{id de producto}
 ```
 
