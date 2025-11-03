@@ -4,7 +4,7 @@ Esta guía te permitirá ejecutar la aplicación en tu entorno local paso a paso
 
 ## Prueba Rápida en la Nube
 
-**Antes de instalar localmente**, puedes [probar la aplicación en la nube](#-cómo-probar-la-api-en-la-nube) que ya está desplegada y funcionando.
+**Antes de instalar localmente**, puedes [probar la aplicación en la nube](#cómo-probar-la-api-en-la-nube) que ya está desplegada y funcionando.
 
 ---
 
@@ -190,7 +190,7 @@ docker-compose down
 
 **1. FRANQUICIAS**
 
-![Crear Franquicia](https://drive.google.com/file/d/11PgLf2XSiitxquxKSY3pNnD94UL2jkAV/view?usp=drive_link)
+![Crear Franquicia](https://drive.google.com/uc?id=11PgLf2XSiitxquxKSY3pNnD94UL2jkAV)
 ```bash
 # Crear Franquicia
 POST http://44.209.140.88/api/franquicias
@@ -199,18 +199,18 @@ Content-Type: application/json
 {"nombre": "McDonald's"}
 ```
 
-![Obtener Franquicias](https://drive.google.com/file/d/11Ao6t25OovtdkN0vFZalKjtVqZn2M2jG/view?usp=drive_link)
+![Obtener Franquicias](https://drive.google.com/uc?id=11Ao6t25OovtdkN0vFZalKjtVqZn2M2jG)
 ```bash
 # Obtener Todas las Franquicias
 GET http://44.209.140.88/api/franquicias
 
-![obtener por id Franquicia](https://drive.google.com/file/d/1eVZadtKCD8LUGQ8UP-7ww2PhmxWS2jZ0/view?usp=drive_link)
+![obtener por id Franquicia](https://drive.google.com/uc?id=1eVZadtKCD8LUGQ8UP-7ww2PhmxWS2jZ0)
 
 # Obtener Franquicia por ID
 GET http://44.209.140.88/api/franquicias/{id de franquicia}
 ```
 
-![Actualizar Franquicia](https://drive.google.com/file/d/19FnVi5-vXB4q-VGnGOSQVwxW93yCicOG/view?usp=drive_link)
+![Actualizar Franquicia](https://drive.google.com/uc?id=19FnVi5-vXB4q-VGnGOSQVwxW93yCicOG)
 ```bash
 # Actualizar Nombre de Franquicia
 PUT http://44.209.140.88/api/franquicias/{id de franquicia}/nombre
@@ -221,7 +221,7 @@ Content-Type: application/json
 
 **2. SUCURSALES**
 
-![Crear Sucursal](https://drive.google.com/file/d/1sbAngLcNXr_5XC9RydGGJfnzYwGvQvEY/view?usp=drive_link)
+![Crear Sucursal](https://drive.google.com/uc?id=1sbAngLcNXr_5XC9RydGGJfnzYwGvQvEY)
 ```bash
 # Crear Sucursal
 POST http://44.209.140.88/api/franquicias/{id de franquicia}/sucursales
@@ -230,7 +230,7 @@ Content-Type: application/json
 {"nombre": "Sucursal Centro"}
 ```
 
-![Actualizar Sucursal](https://drive.google.com/file/d/1rdPS1YhBBhJXPbvDZwJVV1Jac2TR-b6g/view?usp=drive_link)
+![Actualizar Sucursal](https://drive.google.com/uc?id=1rdPS1YhBBhJXPbvDZwJVV1Jac2TR-b6g)
 ```bash
 # Actualizar Nombre de Sucursal
 PUT http://44.209.140.88/api/franquicias/sucursales/{id de sucursal}/nombre
@@ -241,7 +241,7 @@ Content-Type: application/json
 
 **3. PRODUCTOS**
 
-![Crear Producto](https://drive.google.com/file/d/12c27ZkZtPaj6Thr5HTJK7n8OC_28cgOR/view?usp=drive_link)
+![Crear Producto](https://drive.google.com/uc?id=12c27ZkZtPaj6Thr5HTJK7n8OC_28cgOR)
 ```bash
 # Crear Producto
 POST http://44.209.140.88/api/sucursales/{id de sucursal}/productos
@@ -250,7 +250,7 @@ Content-Type: application/json
 {"nombre": "Big Mac", "stock": 50}
 ```
 
-![Actualizar Nombre Producto](https://drive.google.com/file/d/1yFdbv5LSTGYUHwzPs2fldCdTecrYQtJ2/view?usp=drive_link)
+![Actualizar Nombre Producto](https://drive.google.com/uc?id=1yFdbv5LSTGYUHwzPs2fldCdTecrYQtJ2)
 ```bash
 # Actualizar Nombre de Producto
 PUT http://44.209.140.88/api/sucursales/productos/{id de producto}/nombre
@@ -259,7 +259,7 @@ Content-Type: application/json
 {"nombre": "Big Mac Deluxe"}
 ```
 
-![Actualizar Stock](https://drive.google.com/file/d/1YarfBHGa3hrRykfQwPhVwREKVLgSYe8j/view?usp=drive_link)
+![Actualizar Stock](https://drive.google.com/uc?id=1YarfBHGa3hrRykfQwPhVwREKVLgSYe8j)
 ```bash
 # Actualizar Stock de Producto
 PUT http://44.209.140.88/api/sucursales/productos/{id de producto}/stock
@@ -268,13 +268,13 @@ Content-Type: application/json
 {"stock": 75}
 ```
 
-![Obtener Mayor Stock](https://drive.google.com/file/d/1sgPZvPrAKVxXDQ9ixaUqH-WhqJ6joJ0w/view?usp=drive_link)
+![Obtener Mayor Stock](https://drive.google.com/uc?id=1sgPZvPrAKVxXDQ9ixaUqH-WhqJ6joJ0w)
 ```bash
 # Obtener Producto con Mayor Stock por Sucursal
 GET http://44.209.140.88/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
 ```
 
-![Eliminar Producto](https://drive.google.com/file/d/1UBQHhyry7tgmryzDMJtRel0hlmN9o3Tg/view?usp=drive_link)
+![Eliminar Producto](https://drive.google.com/uc?id=1UBQHhyry7tgmryzDMJtRel0hlmN9o3Tg)
 ```bash
 # Eliminar Producto
 DELETE http://44.209.140.88/api/sucursales/productos/{id de producto}
