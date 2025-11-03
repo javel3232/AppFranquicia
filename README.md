@@ -239,6 +239,12 @@ Content-Type: application/json
 {"nombre": "Sucursal Norte"}
 ```
 
+![Obtener Sucursal con Productos](https://drive.google.com/uc?id=18la6b_b_RWF7foETKpQkq-QqZTthXh_4)
+```bash
+# Obtener Sucursal con Todos sus Productos
+GET http://44.209.140.88/api/franquicias/sucursales/{id de sucursal}/productos
+```
+
 **3. PRODUCTOS**
 
 ![Crear Producto](https://drive.google.com/uc?id=12c27ZkZtPaj6Thr5HTJK7n8OC_28cgOR)

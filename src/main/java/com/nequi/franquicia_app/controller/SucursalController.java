@@ -2,6 +2,7 @@ package com.nequi.franquicia_app.controller;
 
 import com.nequi.franquicia_app.dto.request.ActualizarSucursalRequest;
 import com.nequi.franquicia_app.dto.request.CrearSucursalRequest;
+import com.nequi.franquicia_app.dto.response.SucursalConProductosResponse;
 import com.nequi.franquicia_app.exception.FranquiciaNotFoundException;
 import com.nequi.franquicia_app.exception.SucursalNotFoundException;
 import com.nequi.franquicia_app.model.Sucursal;
@@ -31,5 +32,11 @@ public class SucursalController {
             @PathVariable Long sucursalId,
             @RequestBody ActualizarSucursalRequest request) {
         return sucursalService.actualizarNombre(sucursalId, request);
+    }
+    
+    @GetMapping("/sucursales/{sucursalId}/productos")
+    public Mono<SucursalConProductosResponse> obtenerSucursalConProductos(
+            @PathVariable Long sucursalId) {
+        return sucursalService.obtenerSucursalConProductos(sucursalId);
     }
 }
