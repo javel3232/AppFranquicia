@@ -2,38 +2,9 @@
 
 Esta guía te permitirá ejecutar la aplicación en tu entorno local paso a paso, sin importar tu nivel de experiencia.
 
-## 🚀 Prueba Rápida en la Nube
+## Prueba Rápida en la Nube
 
-**Antes de instalar localmente**, puedes probar la aplicación que ya está desplegada en la nube usando Postman o cualquier consumidor de API:
-
-**URL Base:** `http://44.209.140.88/api/franquicias`
-
-**Endpoints para probar:**
-
-```bash
-# 1. Ver franquicias (puede estar vacío al inicio)
-GET http://44.209.140.88/api/franquicias
-
-# 2. Crear franquicia
-POST http://44.209.140.88/api/franquicias
-Content-Type: application/json
-{"nombre": "McDonald's"}
-
-# 3. Crear sucursal (usar ID de franquicia creada)
-POST http://44.209.140.88/api/franquicias/{id de franquicia}/sucursales
-Content-Type: application/json
-{"nombre": "Sucursal Centro"}
-
-# 4. Crear producto (usar ID de sucursal creada)
-POST http://44.209.140.88/api/sucursales/{id de sucursal}/productos
-Content-Type: application/json
-{"nombre": "Big Mac", "stock": 50}
-
-# 5. Ver producto con mayor stock
-GET http://44.209.140.88/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
-```
-
-Simplemente cambia `localhost:8080` por `44.209.140.88` en todos los endpoints de esta guía para probar la versión en la nube.
+**Antes de instalar localmente**, puedes [probar la aplicación en la nube](#-cómo-probar-la-api-en-la-nube) que ya está desplegada y funcionando.
 
 ---
 
@@ -42,7 +13,6 @@ Simplemente cambia `localhost:8080` por `44.209.140.88` en todos los endpoints d
 Antes de comenzar, necesitas instalar las siguientes herramientas:
 
 ### 1. Java Development Kit (JDK) 17
-
 
 ### 2. Git
 - **Windows**: Descargar desde [git-scm.com](https://git-scm.com/)
@@ -116,7 +86,7 @@ Elige uno de los siguientes métodos según tu preferencia:
 
 ## MÉTODO 1: Ejecución Directa con Gradle (Más Simple)
 
-Este es el método más directo .
+Este es el método más directo.
 
 ### Paso 1: Construir la Aplicación
 
@@ -146,7 +116,7 @@ gradlew.bat test
 
 **En Windows:**
 ```cmd
- gradlew.bat bootRun
+gradlew.bat bootRun
 ```
 
 **En Mac/Linux:**
@@ -161,124 +131,6 @@ gradlew.bat test
 3. Deberías ver una respuesta JSON (puede estar vacía al inicio)
 
 **¡Listo! Tu aplicación está funcionando.**
-
-### Paso 5: Probar la API
-
-Una vez que la aplicación esté ejecutándose, puedes probar todos los endpoints siguiendo el orden de los criterios de aceptación.
-
-**RECOMENDACIÓN**: Para una mejor experiencia probando la API, se recomienda usar **Postman** ya que proporciona una interfaz gráfica intuitiva para enviar peticiones HTTP, ver respuestas formateadas y gestionar colecciones de endpoints.
-
-#### Opción 1: Usando Postman (Recomendado)
-
-**Postman es la herramienta recomendada** por su facilidad de uso:
-
-1. **Descargar** Postman desde [postman.com](https://www.postman.com/)
-
-**1. FRANQUICIAS**
-
-```bash
-# Crear Franquicia
-POST http://localhost:8080/api/franquicias
-Content-Type: application/json
-
-{"nombre": "McDonald's"}
-
-# Obtener Todas las Franquicias
-GET http://localhost:8080/api/franquicias
-
-# Obtener Franquicia por ID
-GET http://localhost:8080/api/franquicias/{id de franquicia}
-
-# Actualizar Nombre de Franquicia
-PUT http://localhost:8080/api/franquicias/{id de franquicia}/nombre
-Content-Type: application/json
-
-{"nombre": "McDonald's Premium"}
-```
-
-**2. SUCURSALES**
-
-```bash
-# Crear Sucursal
-POST http://localhost:8080/api/franquicias/{id de franquicia}/sucursales
-Content-Type: application/json
-
-{"nombre": "Sucursal Centro"}
-
-# Actualizar Nombre de Sucursal
-PUT http://localhost:8080/api/franquicias/sucursales/{id de sucursal}/nombre
-Content-Type: application/json
-
-{"nombre": "Sucursal Norte"}
-```
-
-**3. PRODUCTOS**
-
-```bash
-# Crear Producto
-POST http://localhost:8080/api/sucursales/{id de sucursal}/productos
-Content-Type: application/json
-
-{"nombre": "Big Mac", "stock": 50}
-
-
-# Actualizar Nombre de Producto
-PUT http://localhost:8080/api/sucursales/productos/{id de producto}/nombre
-Content-Type: application/json
-
-{"nombre": "Big Mac Deluxe"}
-
-# Actualizar Stock de Producto
-PUT http://localhost:8080/api/sucursales/productos/{id de producto}/stock
-Content-Type: application/json
-
-{"stock": 75}
-
-
-# Obtener Producto con Mayor Stock por Sucursal
-GET http://localhost:8080/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
-
-# Eliminar Producto
-DELETE http://localhost:8080/api/sucursales/productos/{id de producto}
-```
-
-#### Opción 4: Flujo de Prueba Completo con cURL
-
-```bash
-# 1. Crear franquicia
-curl -X POST http://localhost:8080/api/franquicias \
-  -H "Content-Type: application/json" \
-  -d '{"nombre": "McDonald'\'s"}'
-
-# 2. Ver franquicias
-curl http://localhost:8080/api/franquicias
-
-# 3. Crear sucursal
-curl -X POST http://localhost:8080/api/franquicias/{id de franquicia}/sucursales \
-  -H "Content-Type: application/json" \
-  -d '{"nombre": "Centro"}'
-
-# 4. Crear productos
-curl -X POST http://localhost:8080/api/sucursales/{id de sucursal}/productos \
-  -H "Content-Type: application/json" \
-  -d '{"nombre": "Big Mac", "stock": 50}'
-
-# 5. Ver producto con mayor stock
-curl http://localhost:8080/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
-
-# 6. Actualizar stock
-curl -X PUT http://localhost:8080/api/sucursales/productos/{id de producto}/stock \
-  -H "Content-Type: application/json" \
-  -d '{"stock": 75}'
-
-# 7. Actualizar nombre de producto
-curl -X PUT http://localhost:8080/api/sucursales/productos/{id de producto}/nombre \
-  -H "Content-Type: application/json" \
-  -d '{"nombre": "Big Mac Deluxe"}'
-
-# 8. Eliminar producto
-curl -X DELETE http://localhost:8080/api/sucursales/productos/{id de producto}
-```
 
 ---
 
@@ -325,6 +177,119 @@ docker-compose down
 
 ---
 
+## Cómo Probar la API en la Nube
+
+
+**¡Prueba la aplicación sin instalar nada!** La API ya está desplegada y funcionando en la nube.
+
+**URL Base:** `http://44.209.140.88/api/franquicias`
+
+### Usando Postman (Recomendado)
+
+1. **Descargar** Postman desde [postman.com](https://www.postman.com/)
+
+**1. FRANQUICIAS**
+
+![Crear Franquicia](https://drive.google.com/file/d/11PgLf2XSiitxquxKSY3pNnD94UL2jkAV/view?usp=drive_link)
+```bash
+# Crear Franquicia
+POST http://44.209.140.88/api/franquicias
+Content-Type: application/json
+
+{"nombre": "McDonald's"}
+```
+
+![Obtener Franquicias](https://drive.google.com/file/d/11Ao6t25OovtdkN0vFZalKjtVqZn2M2jG/view?usp=drive_link)
+```bash
+# Obtener Todas las Franquicias
+GET http://44.209.140.88/api/franquicias
+
+![obtener por id Franquicia](https://drive.google.com/file/d/1eVZadtKCD8LUGQ8UP-7ww2PhmxWS2jZ0/view?usp=drive_link)
+
+# Obtener Franquicia por ID
+GET http://44.209.140.88/api/franquicias/{id de franquicia}
+```
+
+![Actualizar Franquicia](https://drive.google.com/file/d/19FnVi5-vXB4q-VGnGOSQVwxW93yCicOG/view?usp=drive_link)
+```bash
+# Actualizar Nombre de Franquicia
+PUT http://44.209.140.88/api/franquicias/{id de franquicia}/nombre
+Content-Type: application/json
+
+{"nombre": "McDonald's Premium"}
+```
+
+**2. SUCURSALES**
+
+![Crear Sucursal](https://drive.google.com/file/d/1sbAngLcNXr_5XC9RydGGJfnzYwGvQvEY/view?usp=drive_link)
+```bash
+# Crear Sucursal
+POST http://44.209.140.88/api/franquicias/{id de franquicia}/sucursales
+Content-Type: application/json
+
+{"nombre": "Sucursal Centro"}
+```
+
+![Actualizar Sucursal](https://drive.google.com/file/d/1rdPS1YhBBhJXPbvDZwJVV1Jac2TR-b6g/view?usp=drive_link)
+```bash
+# Actualizar Nombre de Sucursal
+PUT http://44.209.140.88/api/franquicias/sucursales/{id de sucursal}/nombre
+Content-Type: application/json
+
+{"nombre": "Sucursal Norte"}
+```
+
+**3. PRODUCTOS**
+
+![Crear Producto](https://drive.google.com/file/d/12c27ZkZtPaj6Thr5HTJK7n8OC_28cgOR/view?usp=drive_link)
+```bash
+# Crear Producto
+POST http://44.209.140.88/api/sucursales/{id de sucursal}/productos
+Content-Type: application/json
+
+{"nombre": "Big Mac", "stock": 50}
+```
+
+![Actualizar Nombre Producto](https://drive.google.com/file/d/1yFdbv5LSTGYUHwzPs2fldCdTecrYQtJ2/view?usp=drive_link)
+```bash
+# Actualizar Nombre de Producto
+PUT http://44.209.140.88/api/sucursales/productos/{id de producto}/nombre
+Content-Type: application/json
+
+{"nombre": "Big Mac Deluxe"}
+```
+
+![Actualizar Stock](https://drive.google.com/file/d/1YarfBHGa3hrRykfQwPhVwREKVLgSYe8j/view?usp=drive_link)
+```bash
+# Actualizar Stock de Producto
+PUT http://44.209.140.88/api/sucursales/productos/{id de producto}/stock
+Content-Type: application/json
+
+{"stock": 75}
+```
+
+![Obtener Mayor Stock](https://drive.google.com/file/d/1sgPZvPrAKVxXDQ9ixaUqH-WhqJ6joJ0w/view?usp=drive_link)
+```bash
+# Obtener Producto con Mayor Stock por Sucursal
+GET http://44.209.140.88/api/sucursales/franquicias/{id de franquicia}/productos/mayor-stock
+```
+
+![Eliminar Producto](https://drive.google.com/file/d/1UBQHhyry7tgmryzDMJtRel0hlmN9o3Tg/view?usp=drive_link)
+```bash
+# Eliminar Producto
+DELETE http://44.209.140.88/api/sucursales/productos/{id de producto}
+```
+
+---
+
+## Probar la API Local
+
+Una vez que la aplicación esté ejecutándose localmente, puedes probar todos los endpoints cambiando `44.209.140.88` por `localhost:8080` en los ejemplos de arriba.
+
+**RECOMENDACIÓN**: Para una mejor experiencia probando la API, se recomienda usar **Postman** ya que proporciona una interfaz gráfica intuitiva para enviar peticiones HTTP, ver respuestas formateadas y gestionar colecciones de endpoints.
+
+---
+
 ## MÉTODO 3: Ejecución con Archivo JAR (Para Servidores)
 
 Este método genera un archivo ejecutable independiente.
@@ -350,15 +315,6 @@ java -jar build/libs/franquicia_app-0.0.1-SNAPSHOT.jar
 ### Paso 3: Verificar
 
 Ve a: `http://localhost:8080/api/franquicias`
-
----
-
-## Usando Postman (Interfaz Gráfica)
-
-1. Descargar Postman desde [postman.com](https://www.postman.com/)
-2. Crear una nueva colección
-3. Agregar requests con las URLs y métodos HTTP de arriba
-4. Seguir el flujo de prueba completo
 
 ## Solución de Problemas Comunes
 
@@ -396,4 +352,3 @@ Ve a: `http://localhost:8080/api/franquicias`
 ```bash
 docker-compose down
 ```
-
